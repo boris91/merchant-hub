@@ -1,0 +1,81 @@
+.data-table {
+	display: flex;
+	flex-direction: column;
+}
+
+.data-table__title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	background-color: darkgray;
+	color: white;
+}
+
+.data-table__header {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	padding: 0 270px;
+	background-color: gainsboro;
+	font-weight: bold;
+}
+
+.data-table__header-cell {
+	line-height: 1.9;
+	height: 30px;
+}
+
+.data-table__row {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	padding: 0 270px;
+}
+
+.data-table__row:nth-child(odd) {
+	background-color: whitesmoke;
+}
+
+.data-table__row:hover:not(.data-table__row_empty),
+.data-table__row:hover:not(.data-table__row_empty) * {
+	background-color: antiquewhite;
+	cursor: pointer;
+}
+
+.data-table__row-cell {
+	height: 30px;
+	line-height: 1.9;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.data-table__row-cell-image {
+	background: no-repeat center;
+	background-size: cover;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	margin: 5px 0 0 0;
+}
+
+.data-table__nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 40px;
+	width: 200px;
+	align-self: center;
+}
+
+.data-table__nav-button:not(:disabled) {
+	cursor: pointer;
+}
+
+.data-table__nav-counter {
+	color: dimgray;
+}

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/auto1-test-seed.iml" filepath="$PROJECT_DIR$/.idea/auto1-test-seed.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/merchants-hub.iml" filepath="$PROJECT_DIR$/.idea/merchants-hub.iml" />
     </modules>
   </component>
 </project>
