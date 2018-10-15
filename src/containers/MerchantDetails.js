@@ -20,6 +20,7 @@ export default class MerchantDetails extends React.Component {
 		removeMerchant: PropTypes.func.isRequired,
 		addBid: PropTypes.func.isRequired,
 		editBid: PropTypes.func.isRequired,
+		removeBid: PropTypes.func.isRequired,
 		merchantSelected: PropTypes.shape({
 			id: PropTypes.string,
 			firstname: PropTypes.string,
@@ -184,6 +185,13 @@ export default class MerchantDetails extends React.Component {
 		this.setState({ bidMode: Mode.Read, bid: null });
 	};
 
+	onBidRemove = () => {
+		const { bid: { id } } = this.state;
+		const { removeBid } = this.props;
+		removeBid(id);
+		this.setState({ bidMode: Mode.Read, bid: null });
+	};
+
 	render() {
 		const { mode, merchant, bidsPageIndex, bid, bidMode } = this.state;
 
@@ -218,6 +226,7 @@ export default class MerchantDetails extends React.Component {
 							onEdit={this.onBidEdit}
 							onChange={this.onBidChange}
 							onSave={this.onBidSave}
+							onRemove={this.onBidRemove}
 						/>
 					)}
 				</DataForm>

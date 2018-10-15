@@ -53,6 +53,7 @@ export class BidList extends React.Component {
 		onEdit: PropTypes.func,
 		onChange: PropTypes.func,
 		onSave: PropTypes.func,
+		onRemove: PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -68,10 +69,25 @@ export class BidList extends React.Component {
 		onEdit() {},
 		onChange() {},
 		onSave() {},
+		onRemove() {},
 	};
 
 	render() {
-		const { bids, pageIndex, bidSelected, onPageRequest, modalMode, onSelect, onUnselect, onAdd, onCreate, onEdit, onChange, onSave } = this.props;
+		const {
+			bids,
+			pageIndex,
+			bidSelected,
+			onPageRequest,
+			modalMode,
+			onSelect,
+			onUnselect,
+			onAdd,
+			onCreate,
+			onEdit,
+			onChange,
+			onSave,
+			onRemove,
+		} = this.props;
 
 		return (
 			<div className="bid-list">
@@ -102,6 +118,7 @@ export class BidList extends React.Component {
 							onEdit={onEdit}
 							onChange={onChange}
 							onSave={onSave}
+							onRemove={onRemove}
 						/>
 					</ModalDialog>
 				)}

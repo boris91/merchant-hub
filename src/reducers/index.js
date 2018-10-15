@@ -85,6 +85,15 @@ export default (state = preloadedState, action) => {
 			};
 		}
 
+		case actions.REMOVE_BID: {
+			const { id } = action;
+			const { merchantSelected: { id: merchantId } } = state;
+			return {
+				...state,
+				merchantSelected: bidApi.delete(merchantId, id),
+			};
+		}
+
 		default:
 			return state;
 	}

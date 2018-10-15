@@ -27,8 +27,9 @@ export default class BidApi {
 	}
 
 	delete(merchantId, id) {
-		const merchant = this.merchants.find(({ id: mId }) => mId === id);
+		const merchant = this.merchants.find(({ id: mId }) => mId === merchantId);
 		const bidIndex = merchant.bids.findIndex(({ id: bId }) => bId === id);
-		return this.merchants.bids.splice(bidIndex, 1)[0];
+		merchant.bids.splice(bidIndex, 1);
+		return merchant;
 	}
 };

@@ -15,8 +15,7 @@ export const editBid = (id, updates) => ({
 
 export const REMOVE_BID = 'REMOVE_BID';
 
-export const removeBid = (merchantId, id) => ({
+export const removeBid = id => ({
 	type: REMOVE_BID,
-	merchantId,
 	id,
 });
