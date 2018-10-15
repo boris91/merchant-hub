@@ -21,7 +21,7 @@ const renderCellContent = value => {
 	return content;
 };
 
-export const DataTable = ({columns, rows, title, pageIndex, pagesCount, countPerPage, onPageRequest, onRowClick, onAddClick }) => (
+export const DataTable = ({columns, rows, title, itemName, pageIndex, pagesCount, countPerPage, onPageRequest, onRowClick, onAddClick }) => (
 	<div className="data-table">
 		{!!title && <div className="data-table__title">{title}</div>}
 		<div className="data-table__header">
@@ -34,7 +34,6 @@ export const DataTable = ({columns, rows, title, pageIndex, pagesCount, countPer
 					{label}
 				</div>
 			))}
-			<button onClick={onAddClick}>+</button>
 		</div>
 		{rows.length ? (Array(countPerPage + 1).join().split('').map((el, rowIndex) => (
 			<div
@@ -52,7 +51,9 @@ export const DataTable = ({columns, rows, title, pageIndex, pagesCount, countPer
 					</div>
 				))}
 			</div>
-		))) : 'No data.'}
+		))) : (
+			<span className="data-table__placeholder">No items yet.</span>
+		)}
 		{(pagesCount > 1) && (
 			<div className="data-table__nav">
 				<button
@@ -74,6 +75,7 @@ export const DataTable = ({columns, rows, title, pageIndex, pagesCount, countPer
 				</button>
 			</div>
 		)}
+		<button className="data-table__add-button" onClick={onAddClick}>Add new {itemName}</button>
 	</div>
 );
 
@@ -87,6 +89,7 @@ DataTable.propTypes = {
 		id: PropTypes.string,
 	})),
 	title: PropTypes.string,
+	itemName: PropTypes.string,
 	pageIndex: PropTypes.number,
 	pagesCount: PropTypes.number,
 	countPerPage: PropTypes.number,
@@ -98,6 +101,7 @@ DataTable.propTypes = {
 DataTable.defaultProps = {
 	rows: [],
 	title: '',
+	itemName: 'item',
 	pageIndex: 0,
 	pagesCount: 1,
 	countPerPage: 5,

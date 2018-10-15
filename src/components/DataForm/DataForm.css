@@ -1,1 +1,100 @@
-.data-form {}
+.data-form {
+	display: flex;
+	flex-direction: column;
+	background-color: whitesmoke;
+}
+
+.data-form__title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	background-color: darkgray;
+	color: white;
+}
+
+.data-form__fields {
+	display: flex;
+	flex-direction: column;
+	padding: 30px 350px;
+}
+
+.data-form__fields-item {
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+}
+
+.data-form__fields-item:nth-child(odd) {
+	background-color: #eeeeee;
+}
+
+.data-form__fields-item-label {
+	width: 50%;
+}
+
+.data-form__fields-item-value {
+	width: 50%;
+}
+
+.data-form__content {
+	align-self: center;
+}
+
+.data-form__content .data-table__header {
+	padding: 0 30px;
+}
+
+.data-form__actions {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	padding: 30px 350px;
+}
+
+.data-form__actions-button {
+	width: 80px;
+	height: 30px;
+	opacity: 0.8;
+	margin: 0 5px;
+	font-size: 14px;
+	border-radius: 5px;
+	border: 1px solid darkgray;
+	color: dimgray;
+}
+
+.data-form__actions-button:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.data-form__actions-button_back {
+}
+
+.data-form__actions-button_edit {
+	border-color: #3e5f83;
+	color: #3e5f83;
+}
+
+.data-form__actions-button_save {
+	border-color: #28835e;
+	color: #28835e;
+}
+
+.data-form__actions-button_create {
+	border-color: #28835e;
+	color: #28835e;
+}
+
+.data-form__actions-button_cancel {
+	border-color: #833f29;
+	color: #833f29;
+}
+
+.data-form__actions-button_remove {
+	border-color: #831d27;
+	color: #831d27;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataForm, DataTable } from '../components';
+import { DataForm, BidList } from '../components';
 
-const { Mode } = DataForm;
+const { Mode, FieldType } = DataForm;
 
 export default class MerchantDetails extends React.Component {
 	static propTypes = {
@@ -46,6 +46,7 @@ export default class MerchantDetails extends React.Component {
 	state = {
 		mode: Mode.Read,
 		merchant: Object.assign({}, this.props.merchantSelected),
+		bidsPageIndex: 0,
 	};
 
 	componentDidMount() {
@@ -61,6 +62,14 @@ export default class MerchantDetails extends React.Component {
 		}
 	}
 
+	componentDidUpdate() {
+		const { mode, merchant } = this.state;
+		if (mode !== Mode.Create && (!merchant || Object.keys(merchant).length === 0)) {
+			const { history } = this.props;
+			history.goBack();
+		}
+	}
+
 	componentWillUnmount() {
 		const { unselectMerchant } = this.props;
 		unselectMerchant();
@@ -68,14 +77,15 @@ export default class MerchantDetails extends React.Component {
 
 	get fields() {
 		return [{
+			name: 'avatarUrl',
+			label: 'Avatar',
+			type: FieldType.Image,
+		}, {
 			name: 'firstname',
 			label: 'First name',
 		}, {
 			name: 'lastname',
 			label: 'Last name',
-		}, {
-			name: 'avatarUrl',
-			label: 'Avatar',
 		}, {
 			name: 'email',
 			label: 'Email',
@@ -85,7 +95,7 @@ export default class MerchantDetails extends React.Component {
 		}, {
 			name: 'hasPremium',
 			label: 'Has premium',
-			type: 'checkbox',
+			type: FieldType.Bool,
 		}];
 	}
 
@@ -95,7 +105,7 @@ export default class MerchantDetails extends React.Component {
 		const { merchantSelected: merchant } = this.props;
 		const { mode: prevMode } = this.state;
 		this.setState({ mode: Mode.Read, merchant }, () => {
-			if (prevMode === Mode.Create) {
+			if (prevMode === Mode.Read) {
 				const { history } = this.props;
 				history.goBack();
 			}
@@ -103,31 +113,23 @@ export default class MerchantDetails extends React.Component {
 	};
 
 	remove = () => {
-		console.log('remove');
-		const { merchantSelected: merchant } = this.props;
-		this.setState({ mode: Mode.Read, merchant }, () => {
-			const { removeMerchant, merchantSelected: { id }, history } = this.props;
-			removeMerchant(id);
-			history.goBack();
-		});
+		const { removeMerchant, merchantSelected: { id }, history } = this.props;
+		removeMerchant(id);
+		history.goBack();
 	};
 
 	save = () => {
 		const { merchant, merchant: { id } } = this.state;
-		this.setState({ mode: Mode.Read, merchant }, () => {
-			const { editMerchant, history } = this.props;
-			editMerchant(id, merchant);
-			history.goBack();
-		})
+		const { editMerchant, history } = this.props;
+		editMerchant(id, merchant);
+		history.goBack();
 	};
 
 	create = () => {
 		const { merchant } = this.state;
-		this.setState({ mode: Mode.Read, merchant }, () => {
-			const { addMerchant, history } = this.props;
-			addMerchant(merchant);
-			history.goBack();
-		})
+		const { addMerchant, history } = this.props;
+		addMerchant(merchant);
+		history.goBack();
 	};
 
 	change = (fieldName, value) => {
@@ -139,8 +141,10 @@ export default class MerchantDetails extends React.Component {
 		});
 	};
 
+	onBidsPageRequest = bidsPageIndex => this.setState({ bidsPageIndex });
+
 	render() {
-		const { mode, merchant } = this.state;
+		const { mode, merchant, bidsPageIndex } = this.state;
 
 		return (
 			<div className="merchant-details">
@@ -157,7 +161,13 @@ export default class MerchantDetails extends React.Component {
 					onCancel={this.cancel}
 					onEdit={this.edit}
 					onChange={this.change}
-				/>
+				>
+					<BidList
+						bids={merchant.bids}
+						pageIndex={bidsPageIndex}
+						onPageRequest={this.onBidsPageRequest}
+					/>
+				</DataForm>
 			</div>
 		);
 	}

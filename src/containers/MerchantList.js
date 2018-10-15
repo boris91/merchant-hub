@@ -67,6 +67,7 @@ export default class MerchantList extends React.Component {
 		return (
 			<DataTable
 				title="merchants"
+				itemName="merchant"
 				columns={merchantTableColumns}
 				rows={merchants.map(({ id, avatarUrl, firstname, lastname, hasPremium, bids }) => ({
 					avatar: avatarUrl,

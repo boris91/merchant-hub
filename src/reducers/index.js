@@ -5,12 +5,16 @@ import { merchantApi } from '../api';
 export default (state = preloadedState, action) => {
 	switch(action.type) {
 		case actions.GET_MERCHANTS: {
-			const { pageIndex } = action;
+			let { pageIndex } = action;
+			const pagesCount = merchantApi.pagesCount();
+			if (pageIndex > pagesCount - 1 && pagesCount > 0) {
+				pageIndex--;
+			}
 			return {
 				...state,
 				merchants: merchantApi.readRange(pageIndex),
 				merchantsPageIndex: pageIndex,
-				merchantsPagesCount: merchantApi.pagesCount(),
+				merchantsPagesCount: pagesCount,
 				merchantsCountPerPage: merchantApi.countPerPage(),
 			};
 		}

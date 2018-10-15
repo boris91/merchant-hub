@@ -1,25 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DataTable } from '../components';
 
-export const BidList = ({ bids }) => (
-	<table className="bid-list">
-		<thead className="bid-list__header">
-			<th className="bid-list__header-cell">Car title</th>
-			<th className="bid-list__header-cell">Amount</th>
-			<th className="bid-list__header-cell">Created</th>
-		</thead>
-		<tbody>
-			{
-				bids.map(({ id, carTitle, amount, created }) => (
-					<tr className="bid-list__bid" key={id}>
-						<td className="bid-list__bid-cell">{carTitle}</td>
-						<td className="bid-list__bid-cell">{amount}</td>
-						<td className="bid-list__bid-cell">{created}</td>
-					</tr>
-				))
-			}
-		</tbody>
-	</table>
+const bidTableColumns = [{
+	name: 'carTitle',
+	label: 'Car',
+	width: 150,
+}, {
+	name: 'amount',
+	label: 'Amount',
+	width: 100,
+}, {
+	name: 'created',
+	label: 'Created on',
+	width: 150,
+}];
+
+export const BidList = ({ bids, pageIndex, onPageRequest }) => (
+	<DataTable
+		title="Bids"
+		itemName="bid"
+		columns={bidTableColumns}
+		rows={bids.slice(pageIndex * 5, pageIndex * 5 + 5)}
+		pagesCount={Math.ceil(bids.length / 5)}
+		countPerPage={5}
+		pageIndex={pageIndex}
+		onPageRequest={onPageRequest}
+	/>
 );
 
 BidList.propTypes = {
@@ -29,6 +36,14 @@ BidList.propTypes = {
 		amount: PropTypes.number,
 		created: PropTypes.string,
 	})),
+	pageIndex: PropTypes.number,
+	onPageRequest: PropTypes.func,
+};
+
+BidList.defaultProps = {
+	bids: [],
+	pageIndex: 0,
+	onPageRequest() {},
 };
 
 export default BidList;

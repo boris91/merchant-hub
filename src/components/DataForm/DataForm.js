@@ -11,21 +11,21 @@ const Mode = {
 const FieldType = {
 	Text: 'text',
 	Number: 'number',
-	Checkbox: 'checkbox',
-	Image: 'image',
+	Bool: 'checkbox',
+	Image: 'file',
 };
 
 const FieldValueKey = {
 	[FieldType.Text]: 'value',
 	[FieldType.Number]: 'value',
-	[FieldType.Checkbox]: 'checked',
-	[FieldType.Image]: 'value',
+	[FieldType.Bool]: 'checked',
+	[FieldType.Image]: 'defaultValue',
 };
 
 const FieldDefaultValue = {
 	[FieldType.Text]: '',
 	[FieldType.Number]: 0,
-	[FieldType.Checkbox]: false,
+	[FieldType.Bool]: false,
 	[FieldType.Image]: '',
 };
 
@@ -41,6 +41,10 @@ export class DataForm extends React.Component {
 			label: PropTypes.string,
 		})).isRequired,
 		data: PropTypes.shape(),
+		children: PropTypes.oneOfType([
+			PropTypes.node,
+			PropTypes.arrayOf(PropTypes.node),
+		]),
 		title: PropTypes.string,
 		mode: PropTypes.oneOf(Object.values(Mode)),
 		editable: PropTypes.bool,
@@ -55,6 +59,7 @@ export class DataForm extends React.Component {
 
 	static defaultProps = {
 		data: {},
+		children: null,
 		title: 'Untitled',
 		mode: Mode.Read,
 		editable: true,
@@ -86,36 +91,53 @@ export class DataForm extends React.Component {
 
 		return (
 			<div className="data-form__fields-item" key={`data_form_fields_item.${name}.${type}`}>
-				{!!label && <span className="data-form__fields-item__label">{label}</span>}
-				<input className="data-form__fields-item__value" {...fieldValueProps}/>
+				{!!label && <span className="data-form__fields-item-label">{label}</span>}
+				<input className="data-form__fields-item-value" {...fieldValueProps}/>
 			</div>
 		);
 	}
 
 	render() {
-		const { title, fields, data, mode, editable, removable, onEdit, onSave, onCreate, onCancel, onRemove } = this.props;
+		const {
+			title,
+			fields,
+			data,
+			children,
+			mode,
+			editable,
+			removable,
+			onEdit,
+			onSave,
+			onCreate,
+			onCancel,
+			onRemove,
+		} = this.props;
 
 		return (
 			<div className="data-form">
-				<span className="data-form__title">{title}</span>
+				<span className="data-form__title">{`${mode === Mode.Read ? '' : `${mode} `}${title}`}</span>
 				<div className="data-form__fields">
 					{!!data && fields.map(this.renderField)}
 				</div>
+				{!!children && <div className="data-form__content">{children}</div>}
 				<div className="data-form__actions">
 					{editable && mode === Mode.Read && (
-						<button onClick={onEdit}>Edit</button>
+						<button className="data-form__actions-button data-form__actions-button_back" onClick={onCancel}>Back</button>
+					)}
+					{editable && mode === Mode.Read && (
+						<button className="data-form__actions-button data-form__actions-button_edit" onClick={onEdit}>Edit</button>
 					)}
 					{editable && mode === Mode.Edit && (
-						<button onClick={onSave}>Save</button>
+						<button className="data-form__actions-button data-form__actions-button_save" onClick={onSave}>Save</button>
 					)}
 					{editable && mode === Mode.Create && (
-						<button onClick={onCreate}>Create</button>
+						<button className="data-form__actions-button data-form__actions-button_create" onClick={onCreate}>Create</button>
 					)}
 					{editable && mode !== Mode.Read && (
-						<button onClick={onCancel}>Cancel</button>
+						<button className="data-form__actions-button data-form__actions-button_cancel" onClick={onCancel}>Cancel</button>
 					)}
 					{removable && mode === Mode.Read && (
-						<button onClick={onRemove}>Remove</button>
+						<button className="data-form__actions-button data-form__actions-button_remove" onClick={onRemove}>Remove</button>
 					)}
 				</div>
 			</div>

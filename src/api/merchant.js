@@ -2,11 +2,27 @@ import { merchants, generateId } from './data';
 
 export default {
 	create(merchant) {
+		const {
+			firstname = '',
+			lastname = '',
+			avatarUrl = '../default-avatar.png',
+			email = '',
+			phone = '',
+			hasPremium = false,
+			bids = [],
+		} = merchant;
+
 		merchants.push({
-			...merchant,
+			firstname,
+			lastname,
+			avatarUrl,
+			email,
+			phone,
+			hasPremium,
+			bids,
 			id: generateId(merchant, merchants.length, 'firstname', 'lastname'),
-			bids: merchant.bids || [],
 		});
+
 		return merchant;
 	},
 

@@ -32,7 +32,7 @@ export const merchants = getRandomLengthArray().map((el, mIndex) => {
 		bids: getRandomLengthArray().map((el, bIndex) => ({
 			id: `Bid.${mIndex}.${bIndex}`,
 			carTitle: `Car (${mIndex}) (${bIndex})`,
-			amount: Math.round(Math.random() * 10),
+			amount: 1 + Math.round(Math.random() * 10),
 			created: new Date(2018, 0, Math.min(bIndex, 31)).toDateString(),
 		})),
 	};
