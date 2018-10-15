@@ -32,6 +32,7 @@ export default (state = preloadedState, action) => {
 			merchantApi.create(merchant);
 			return {
 				...state,
+				merchantsPageIndex: merchantApi.pagesCount() - 1,
 			};
 		}
 

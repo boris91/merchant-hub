@@ -120,9 +120,10 @@ export default class MerchantDetails extends React.Component {
 
 	save = () => {
 		const { merchant, merchant: { id } } = this.state;
-		const { editMerchant, history } = this.props;
-		editMerchant(id, merchant);
-		history.goBack();
+		this.setState({ mode: Mode.Read }, () => {
+			const { editMerchant } = this.props;
+			editMerchant(id, merchant);
+		});
 	};
 
 	create = () => {

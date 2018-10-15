@@ -25,7 +25,8 @@
 .data-form__fields-item {
 	display: flex;
 	flex-direction: row;
-	padding: 10px;
+	align-items: center;
+	padding: 5px;
 }
 
 .data-form__fields-item:nth-child(odd) {
@@ -38,6 +39,19 @@
 
 .data-form__fields-item-value {
 	width: 50%;
+	font-size: 15px;
+	font-weight: 100;
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.data-form__fields-item-value:disabled {
+	border-color: transparent;
+	background-color: transparent;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .data-form__content {
