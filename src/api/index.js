@@ -1,10 +1,7 @@
-import merchant from './merchant';
-import bid from './bid';
+import data from './data';
+import MerchantApi from './merchant';
+import BidApi from './bid';
 
-export const merchantApi = merchant;
-export const bidApi = bid;
+export const merchantApi = new MerchantApi(data);
 
-export default {
-	merchant,
-	bid,
-};
+export const bidApi = new BidApi(data);

@@ -1,6 +1,6 @@
 import preloadedState from '../preloadedState';
 import * as actions from '../actions';
-import { merchantApi } from '../api';
+import { merchantApi, bidApi } from '../api';
 
 export default (state = preloadedState, action) => {
 	switch(action.type) {
@@ -63,6 +63,16 @@ export default (state = preloadedState, action) => {
 			merchantApi.delete(id);
 			return {
 				...state,
+			};
+		}
+
+		case actions.ADD_BID: {
+			const { bid } = action;
+			const { merchantSelected: { id: merchantId } } = state;
+			const merchantSelected = bidApi.create(merchantId, bid);
+			return {
+				...state,
+				merchantSelected,
 			};
 		}
 

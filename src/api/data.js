@@ -33,8 +33,9 @@ export const generateId = (item, index, ...props) => (
 export const merchants = getRandomLengthArray().map((el, mIndex) => {
 	const firstname = getRandomItem(firstNames);
 	const lastname = getRandomItem(lastNames);
+	const id = `${firstname}_${lastname}.${mIndex}`;
 	return {
-		id: `${firstname}_${lastname}.${mIndex}`,
+		id,
 		firstname,
 		lastname,
 		avatarUrl: '../default-avatar.png',
@@ -42,10 +43,12 @@ export const merchants = getRandomLengthArray().map((el, mIndex) => {
 		phone: `+37529123456${mIndex}`,
 		hasPremium: Math.random() >= 0.5,
 		bids: getRandomLengthArray().map((el, bIndex) => ({
-			id: `Bid.${mIndex}.${bIndex}`,
+			id: `Bid.${id}.${bIndex}`,
 			carTitle: getRandomItem(carTitles),
 			amount: 1 + Math.round(Math.random() * 10),
 			created: new Date(2018, 0, Math.min(bIndex, 31)).toDateString(),
 		})),
 	};
 });
+
+export default merchants;

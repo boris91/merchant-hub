@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DataTable, ModalDialog, DataForm } from '../../components';
 import './BidList.css';
 
-const { FieldType } = DataForm;
+const { FieldType, Mode } = DataForm;
 
 const bidTableColumns = [{
 	name: 'carTitle',
@@ -44,26 +44,28 @@ export class BidList extends React.Component {
 		bids: PropTypes.arrayOf(BidPropType),
 		bidSelected: BidPropType,
 		pageIndex: PropTypes.number,
-		readonly: PropTypes.bool,
+		modalMode: PropTypes.oneOf(Object.values(Mode)),
 		onPageRequest: PropTypes.func,
 		onSelect: PropTypes.func,
 		onUnselect: PropTypes.func,
 		onAdd: PropTypes.func,
+		onCreate: PropTypes.func,
 	};
 
 	static defaultProps = {
 		bids: [],
 		bidSelected: null,
 		pageIndex: 0,
-		readonly: false,
+		modalMode: Mode.Read,
 		onPageRequest() {},
 		onSelect() {},
 		onUnselect() {},
 		onAdd() {},
+		onCreate() {},
 	};
 
 	render() {
-		const { bids, pageIndex, bidSelected, onPageRequest, readonly, onSelect, onUnselect, onAdd } = this.props;
+		const { bids, pageIndex, bidSelected, onPageRequest, modalMode, onSelect, onUnselect, onAdd, onCreate } = this.props;
 
 		return (
 			<div className="bid-list">
@@ -78,7 +80,6 @@ export class BidList extends React.Component {
 					onPageRequest={onPageRequest}
 					onAddClick={onAdd}
 					onRowClick={onSelect}
-					readonly={readonly}
 				/>
 				{!!bidSelected && (
 					<ModalDialog
@@ -89,6 +90,8 @@ export class BidList extends React.Component {
 							fields={bidFormFields}
 							data={bidSelected}
 							backNav={false}
+							mode={modalMode}
+							onCreate={onCreate}
 							onCancel={onUnselect}
 						/>
 					</ModalDialog>

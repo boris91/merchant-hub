@@ -1,11 +1,8 @@
 export const ADD_BID = 'ADD_BID';
 
-export const addBid = (merchantId, carTitle, amount) => ({
+export const addBid = bid => ({
 	type: ADD_BID,
-	merchantId,
-	carTitle,
-	amount,
-	created: new Date().toDateString(),
+	bid,
 });
 
 export const EDIT_BID = 'EDIT_BID';

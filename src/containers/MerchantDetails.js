@@ -18,6 +18,7 @@ export default class MerchantDetails extends React.Component {
 		editMerchant: PropTypes.func.isRequired,
 		addMerchant: PropTypes.func.isRequired,
 		removeMerchant: PropTypes.func.isRequired,
+		addBid: PropTypes.func.isRequired,
 		merchantSelected: PropTypes.shape({
 			id: PropTypes.string,
 			firstname: PropTypes.string,
@@ -38,6 +39,7 @@ export default class MerchantDetails extends React.Component {
 	};
 
 	static getDerivedStateFromProps(props, state) {
+		props.merchantSelected && console.log(props.merchantSelected.bids[props.merchantSelected.bids.length - 1]);
 		const { mode } = state;
 		return mode === Mode.Create || mode === Mode.Edit ? null : {
 			...state,
@@ -50,6 +52,7 @@ export default class MerchantDetails extends React.Component {
 		merchant: Object.assign({}, this.props.merchantSelected),
 		bidsPageIndex: 0,
 		bid: null,
+		bidMode: Mode.Read,
 	};
 
 	componentDidMount() {
@@ -152,10 +155,19 @@ export default class MerchantDetails extends React.Component {
 		this.setState({ bid });
 	};
 
-	onBidUnselect = () => this.setState({ bid: null });
+	onBidAdd = () => this.setState({ bid: {}, bidMode: Mode.Create });
+
+	onBidCreate = () => {
+		const { bid } = this.state;
+		const { addBid } = this.props;
+		addBid(bid);
+		this.setState({ bid: null, bidMode: Mode.Read });
+	};
+
+	onBidUnselect = () => this.setState({ bid: null, bidMode: Mode.Read });
 
 	render() {
-		const { mode, merchant, bidsPageIndex, bid } = this.state;
+		const { mode, merchant, bidsPageIndex, bid, bidMode } = this.state;
 
 		return (
 			<div className="merchant-details">
@@ -166,7 +178,7 @@ export default class MerchantDetails extends React.Component {
 					removable
 					fields={this.fields}
 					data={merchant}
-					actionsOnTop
+					actionsOnTop={mode !== Mode.Create}
 					onSave={this.save}
 					onCreate={this.create}
 					onRemove={this.remove}
@@ -174,15 +186,19 @@ export default class MerchantDetails extends React.Component {
 					onEdit={this.edit}
 					onChange={this.change}
 				>
-					<BidList
-						bids={merchant.bids}
-						bidSelected={bid}
-						pageIndex={bidsPageIndex}
-						onPageRequest={this.onBidsPageRequest}
-						readonly={mode === Mode.Read}
-						onSelect={this.onBidSelect}
-						onUnselect={this.onBidUnselect}
-					/>
+					{mode !== Mode.Create && (
+						<BidList
+							bids={merchant.bids}
+							bidSelected={bid}
+							pageIndex={bidsPageIndex}
+							onPageRequest={this.onBidsPageRequest}
+							modalMode={bidMode}
+							onSelect={this.onBidSelect}
+							onUnselect={this.onBidUnselect}
+							onAdd={this.onBidAdd}
+							onCreate={this.onBidCreate}
+						/>
+					)}
 				</DataForm>
 			</div>
 		);

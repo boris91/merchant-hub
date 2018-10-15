@@ -104,11 +104,11 @@ export class DataForm extends React.Component {
 		);
 	}
 
-	renderActions() {
+	renderActions(rightAligned) {
 		const { editable, removable, mode, backNav, onRemove, onSave, onEdit, onCancel, onCreate } = this.props;
 
 		return (
-			<div className="data-form__actions">
+			<div className={`data-form__actions${rightAligned ? ' data-form__actions_right-aligned' : ''}`}>
 				{backNav && editable && mode === Mode.Read && (
 					<button className="data-form__actions-button data-form__actions-button_back" onClick={onCancel}>Back</button>
 				)}
@@ -144,7 +144,7 @@ export class DataForm extends React.Component {
 					{!!data && fields.map(this.renderField)}
 				</div>
 				{!!children && <div className="data-form__content">{children}</div>}
-				{!actionsOnTop && this.renderActions()}
+				{!actionsOnTop && this.renderActions(true)}
 			</div>
 		);
 	}

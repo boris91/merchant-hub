@@ -66,6 +66,10 @@
 	margin: 0 350px 20px 350px;
 }
 
+.data-form__actions_right-aligned {
+	justify-content: flex-end;
+}
+
 .data-form__actions-button {
 	width: 80px;
 	height: 30px;
