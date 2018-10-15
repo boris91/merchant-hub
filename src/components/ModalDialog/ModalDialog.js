@@ -8,7 +8,7 @@ const stopEventPropagation = event => {
 };
 
 export const ModalDialog = ({ title, closable, children, onClose }) => (
-	<div className="modal-dialog" onClick={onClose}>
+	<div className="modal-dialog" onClick={closable ? onClose : () => {}}>
 		<div className="modal-dialog__frame" onClick={stopEventPropagation}>
 			{(!!title || closable) && (
 				<div className="modal-dialog__frame-header">

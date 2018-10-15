@@ -144,6 +144,8 @@ export default class MerchantDetails extends React.Component {
 
 	onBidsPageRequest = bidsPageIndex => this.setState({ bidsPageIndex });
 
+	onBidSelect = id => console.log(id);
+
 	render() {
 		const { mode, merchant, bidsPageIndex } = this.state;
 
@@ -167,6 +169,8 @@ export default class MerchantDetails extends React.Component {
 						bids={merchant.bids}
 						pageIndex={bidsPageIndex}
 						onPageRequest={this.onBidsPageRequest}
+						readonly={mode === Mode.Read}
+						onSelect={this.onBidSelect}
 					/>
 				</DataForm>
 			</div>

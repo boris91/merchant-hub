@@ -21,7 +21,19 @@ const renderCellContent = value => {
 	return content;
 };
 
-export const DataTable = ({columns, rows, title, itemName, pageIndex, pagesCount, countPerPage, onPageRequest, onRowClick, onAddClick }) => (
+export const DataTable = ({
+	columns,
+	rows,
+	title,
+	itemName,
+	pageIndex,
+	pagesCount,
+	countPerPage,
+	onPageRequest,
+	onRowClick,
+	onAddClick,
+	readonly,
+}) => (
 	<div className="data-table">
 		{!!title && <div className="data-table__title">{title}</div>}
 		<div className="data-table__header">
@@ -75,7 +87,9 @@ export const DataTable = ({columns, rows, title, itemName, pageIndex, pagesCount
 				</button>
 			</div>
 		)}
-		<button className="data-table__add-button" onClick={onAddClick}>Add new {itemName}</button>
+		{!readonly && (
+			<button className="data-table__add-button" onClick={onAddClick}>Add new {itemName}</button>
+		)}
 	</div>
 );
 
@@ -90,6 +104,7 @@ DataTable.propTypes = {
 	})),
 	title: PropTypes.string,
 	itemName: PropTypes.string,
+	readonly: PropTypes.bool,
 	pageIndex: PropTypes.number,
 	pagesCount: PropTypes.number,
 	countPerPage: PropTypes.number,
@@ -102,6 +117,7 @@ DataTable.defaultProps = {
 	rows: [],
 	title: '',
 	itemName: 'item',
+	readonly: false,
 	pageIndex: 0,
 	pagesCount: 1,
 	countPerPage: 5,

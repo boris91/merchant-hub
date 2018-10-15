@@ -1,0 +1,11 @@
+.bid-list .modal-dialog__frame-content {
+	padding: 0;
+}
+
+.bid-list .modal-dialog__frame-content .data-form__fields {
+	padding: 20px 50px;
+}
+
+.bid-list .modal-dialog__frame-content .data-form__actions {
+	padding: 20px 50px;
+}

@@ -13,6 +13,7 @@ const FieldType = {
 	Number: 'number',
 	Bool: 'checkbox',
 	Image: 'file',
+	Date: 'date',
 };
 
 const FieldValueKey = {
@@ -20,6 +21,7 @@ const FieldValueKey = {
 	[FieldType.Number]: 'value',
 	[FieldType.Bool]: 'checked',
 	[FieldType.Image]: 'defaultValue',
+	[FieldType.Date]: 'value',
 };
 
 const FieldDefaultValue = {
@@ -27,6 +29,7 @@ const FieldDefaultValue = {
 	[FieldType.Number]: 0,
 	[FieldType.Bool]: false,
 	[FieldType.Image]: '',
+	[FieldType.Date]: '',
 };
 
 export class DataForm extends React.Component {
@@ -60,7 +63,7 @@ export class DataForm extends React.Component {
 	static defaultProps = {
 		data: {},
 		children: null,
-		title: 'Untitled',
+		title: '',
 		mode: Mode.Read,
 		editable: true,
 		removable: true,
@@ -115,7 +118,9 @@ export class DataForm extends React.Component {
 
 		return (
 			<div className="data-form">
-				<span className="data-form__title">{`${mode === Mode.Read ? '' : `${mode} `}${title}`}</span>
+				{!!title && (
+					<span className="data-form__title">{`${mode === Mode.Read ? '' : `${mode} `}${title}`}</span>
+				)}
 				<div className="data-form__fields">
 					{!!data && fields.map(this.renderField)}
 				</div>

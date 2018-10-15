@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataTable, ModalDialog } from '../components';
+import { DataTable, ModalForm } from '../../components';
+import './BidList.css';
+
+const { FieldType } = ModalForm;
 
 const bidTableColumns = [{
 	name: 'carTitle',
@@ -16,6 +19,19 @@ const bidTableColumns = [{
 	width: 150,
 }];
 
+const bidFormFields = [{
+	name: 'carTitle',
+	label: 'Car',
+}, {
+	name: 'amount',
+	label: 'Amount',
+	type: FieldType.Number,
+}, {
+	name: 'created',
+	label: 'Created on',
+	width: FieldType.Date,
+}];
+
 export class BidList extends React.Component {
 	static propTypes = {
 		bids: PropTypes.arrayOf(PropTypes.shape({
@@ -25,26 +41,32 @@ export class BidList extends React.Component {
 			created: PropTypes.string,
 		})),
 		pageIndex: PropTypes.number,
+		readonly: PropTypes.bool,
 		onPageRequest: PropTypes.func,
+		onAdd: PropTypes.func,
 	};
 
 	static defaultProps = {
 		bids: [],
 		pageIndex: 0,
+		readonly: false,
 		onPageRequest() {},
+		onAdd() {},
 	};
 
 	state = {
-		isModalDialogOpened: false,
+		bidSelected: null,
 	};
 
-	onBidAdd = () => this.setState({ isModalDialogOpened: true });
+	openBidModal = id => this.setState({
+		bidSelected: this.props.bids.find(({ id: bId }) => bId === id),
+	});
 
-	onModalDialogClose = () => this.setState({ isModalDialogOpened: false });
+	closeBidModal = () => this.setState({ bidSelected: null });
 
 	render() {
-		const { bids, pageIndex, onPageRequest } = this.props;
-		const { isModalDialogOpened } = this.state;
+		const { bids, pageIndex, onPageRequest, readonly, onAdd } = this.props;
+		const { bidSelected } = this.state;
 
 		return (
 			<div className="bid-list">
@@ -57,10 +79,12 @@ export class BidList extends React.Component {
 					countPerPage={5}
 					pageIndex={pageIndex}
 					onPageRequest={onPageRequest}
-					onAddClick={this.onBidAdd}
+					onAddClick={onAdd}
+					onRowClick={this.openBidModal}
+					readonly={readonly}
 				/>
-				{isModalDialogOpened && (
-					<ModalDialog title="title" onClose={this.onModalDialogClose}>content</ModalDialog>
+				{!!bidSelected && (
+					<ModalForm title="Bid" fields={bidFormFields} data={bidSelected} onCancel={this.closeBidModal} />
 				)}
 			</div>
 		);
