@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataTable, ModalForm } from '../../components';
+import { DataTable, ModalDialog, DataForm } from '../../components';
 import './BidList.css';
 
-const { FieldType } = ModalForm;
+const { FieldType } = DataForm;
 
 const bidTableColumns = [{
 	name: 'carTitle',
@@ -81,13 +81,17 @@ export class BidList extends React.Component {
 					readonly={readonly}
 				/>
 				{!!bidSelected && (
-					<ModalForm
+					<ModalDialog
 						title="Bid"
-						fields={bidFormFields}
-						data={bidSelected}
-						backNav={false}
-						onCancel={onUnselect}
-					/>
+						onClose={onUnselect}
+					>
+						<DataForm
+							fields={bidFormFields}
+							data={bidSelected}
+							backNav={false}
+							onCancel={onUnselect}
+						/>
+					</ModalDialog>
 				)}
 			</div>
 		);

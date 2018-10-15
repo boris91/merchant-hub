@@ -10,17 +10,29 @@ const firstNames = [
 
 const lastNames = firstNames.map(firstName => firstName + 'son');
 
+const carTitles = [
+	'BMW X5 e53',
+	'BMW X5 e70',
+	'BMW X5 f15',
+	'BMW X5 f85',
+	'BMW X5 g05',
+	'BMW X6 e71',
+	'BMW X6 f16',
+	'BMW X6 f86',
+	'BMW X6 g06',
+];
+
 const getRandomLengthArray = () => Array(10 + Math.round(Math.random() * 10)).join().split('');
 
-const getRandomName = names => names[Math.floor(Math.random() * names.length)];
+const getRandomItem = array => array[Math.floor(Math.random() * array.length)];
 
 export const generateId = (item, index, ...props) => (
 	props.map(key => item[key]).join('_') + '.' + index
 );
 
 export const merchants = getRandomLengthArray().map((el, mIndex) => {
-	const firstname = getRandomName(firstNames);
-	const lastname = getRandomName(lastNames);
+	const firstname = getRandomItem(firstNames);
+	const lastname = getRandomItem(lastNames);
 	return {
 		id: `${firstname}_${lastname}.${mIndex}`,
 		firstname,
@@ -31,7 +43,7 @@ export const merchants = getRandomLengthArray().map((el, mIndex) => {
 		hasPremium: Math.random() >= 0.5,
 		bids: getRandomLengthArray().map((el, bIndex) => ({
 			id: `Bid.${mIndex}.${bIndex}`,
-			carTitle: `Car (${mIndex}) (${bIndex})`,
+			carTitle: getRandomItem(carTitles),
 			amount: 1 + Math.round(Math.random() * 10),
 			created: new Date(2018, 0, Math.min(bIndex, 31)).toDateString(),
 		})),
