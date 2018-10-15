@@ -158,6 +158,7 @@ export default class MerchantDetails extends React.Component {
 					removable
 					fields={this.fields}
 					data={merchant}
+					actionsOnTop
 					onSave={this.save}
 					onCreate={this.create}
 					onRemove={this.remove}

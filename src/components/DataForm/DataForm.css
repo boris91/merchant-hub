@@ -14,12 +14,13 @@
 	text-transform: uppercase;
 	background-color: darkgray;
 	color: white;
+	margin: 0 0 20px 0;
 }
 
 .data-form__fields {
 	display: flex;
 	flex-direction: column;
-	padding: 30px 350px;
+	margin: 0 350px 20px 350px;
 }
 
 .data-form__fields-item {
@@ -56,17 +57,13 @@
 
 .data-form__content {
 	align-self: center;
-}
-
-.data-form__content .data-table__header {
-	padding: 0 30px;
+	margin: 0 0 20px 0;
 }
 
 .data-form__actions {
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-end;
-	padding: 30px 350px;
+	margin: 0 350px 20px 350px;
 }
 
 .data-form__actions-button {
