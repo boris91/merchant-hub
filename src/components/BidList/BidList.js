@@ -29,7 +29,7 @@ const bidFormFields = [{
 }, {
 	name: 'created',
 	label: 'Created on',
-	width: FieldType.Date,
+	type: FieldType.Date,
 }];
 
 const BidPropType = PropTypes.shape({
@@ -50,6 +50,9 @@ export class BidList extends React.Component {
 		onUnselect: PropTypes.func,
 		onAdd: PropTypes.func,
 		onCreate: PropTypes.func,
+		onEdit: PropTypes.func,
+		onChange: PropTypes.func,
+		onSave: PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -62,10 +65,13 @@ export class BidList extends React.Component {
 		onUnselect() {},
 		onAdd() {},
 		onCreate() {},
+		onEdit() {},
+		onChange() {},
+		onSave() {},
 	};
 
 	render() {
-		const { bids, pageIndex, bidSelected, onPageRequest, modalMode, onSelect, onUnselect, onAdd, onCreate } = this.props;
+		const { bids, pageIndex, bidSelected, onPageRequest, modalMode, onSelect, onUnselect, onAdd, onCreate, onEdit, onChange, onSave } = this.props;
 
 		return (
 			<div className="bid-list">
@@ -93,6 +99,9 @@ export class BidList extends React.Component {
 							mode={modalMode}
 							onCreate={onCreate}
 							onCancel={onUnselect}
+							onEdit={onEdit}
+							onChange={onChange}
+							onSave={onSave}
 						/>
 					</ModalDialog>
 				)}

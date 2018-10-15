@@ -7,9 +7,8 @@ export const addBid = bid => ({
 
 export const EDIT_BID = 'EDIT_BID';
 
-export const editBid = (merchantId, id, updates) => ({
+export const editBid = (id, updates) => ({
 	type: EDIT_BID,
-	merchantId,
 	id,
 	updates,
 });

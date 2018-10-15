@@ -22,7 +22,8 @@ export default class BidApi {
 	update(merchantId, id, bidUpdates) {
 		const merchant = this.merchants.find(({ id }) => id === merchantId);
 		const bid = merchant.bids.find(({ id: bId }) => bId === id);
-		return Object.assign(bid, bidUpdates);
+		Object.assign(bid, bidUpdates);
+		return merchant;
 	}
 
 	delete(merchantId, id) {

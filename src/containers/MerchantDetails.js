@@ -19,6 +19,7 @@ export default class MerchantDetails extends React.Component {
 		addMerchant: PropTypes.func.isRequired,
 		removeMerchant: PropTypes.func.isRequired,
 		addBid: PropTypes.func.isRequired,
+		editBid: PropTypes.func.isRequired,
 		merchantSelected: PropTypes.shape({
 			id: PropTypes.string,
 			firstname: PropTypes.string,
@@ -39,7 +40,6 @@ export default class MerchantDetails extends React.Component {
 	};
 
 	static getDerivedStateFromProps(props, state) {
-		props.merchantSelected && console.log(props.merchantSelected.bids[props.merchantSelected.bids.length - 1]);
 		const { mode } = state;
 		return mode === Mode.Create || mode === Mode.Edit ? null : {
 			...state,
@@ -166,6 +166,24 @@ export default class MerchantDetails extends React.Component {
 
 	onBidUnselect = () => this.setState({ bid: null, bidMode: Mode.Read });
 
+	onBidEdit = () => this.setState({ bidMode: Mode.Edit });
+
+	onBidChange = (fieldName, value) => {
+		this.setState({
+			bid: {
+				...this.state.bid,
+				[fieldName]: value,
+			},
+		});
+	};
+
+	onBidSave = () => {
+		const { bid: { id }, bid } = this.state;
+		const { editBid } = this.props;
+		editBid(id, bid);
+		this.setState({ bidMode: Mode.Read, bid: null });
+	};
+
 	render() {
 		const { mode, merchant, bidsPageIndex, bid, bidMode } = this.state;
 
@@ -197,6 +215,9 @@ export default class MerchantDetails extends React.Component {
 							onUnselect={this.onBidUnselect}
 							onAdd={this.onBidAdd}
 							onCreate={this.onBidCreate}
+							onEdit={this.onBidEdit}
+							onChange={this.onBidChange}
+							onSave={this.onBidSave}
 						/>
 					)}
 				</DataForm>

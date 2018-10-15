@@ -79,9 +79,13 @@ export class DataForm extends React.Component {
 		onChange() {},
 	};
 
-	onFieldChange = ({ target: { dataset: { fieldName, fieldValueKey } }, target }) => {
+	onFieldChange = ({ target: { type, dataset: { fieldName, fieldValueKey } }, target }) => {
 		const { onChange } = this.props;
-		onChange(fieldName, target[fieldValueKey]);
+		let { [fieldValueKey]: value } = target;
+		if (type === FieldType.Number) {
+			value = +value;
+		}
+		onChange(fieldName, value);
 	};
 
 	renderField = ({ type = FieldType.Text, name, label }, index) => {

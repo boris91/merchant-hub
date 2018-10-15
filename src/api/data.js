@@ -1,3 +1,5 @@
+import { getFormattedDate } from '../utils/date';
+
 const firstNames = [
 	'Robert',
 	'John',
@@ -46,7 +48,7 @@ export const merchants = getRandomLengthArray().map((el, mIndex) => {
 			id: `Bid.${id}.${bIndex}`,
 			carTitle: getRandomItem(carTitles),
 			amount: 1 + Math.round(Math.random() * 10),
-			created: new Date(2018, 0, Math.min(bIndex, 31)).toDateString(),
+			created: getFormattedDate(2018, 0, Math.min(bIndex, 31)),
 		})),
 	};
 });

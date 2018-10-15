@@ -76,6 +76,15 @@ export default (state = preloadedState, action) => {
 			};
 		}
 
+		case actions.EDIT_BID: {
+			const { id, updates } = action;
+			const { merchantSelected: { id: merchantId } } = state;
+			return {
+				...state,
+				merchantSelected: bidApi.update(merchantId, id, updates),
+			};
+		}
+
 		default:
 			return state;
 	}

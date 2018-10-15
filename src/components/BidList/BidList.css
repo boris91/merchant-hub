@@ -14,3 +14,7 @@
 	margin: 0 30px 20px 30px;
 	justify-content: flex-end;
 }
+
+.bid-list .modal-dialog__frame-content .data-form__fields-item-value {
+	width: 80%;
+}
