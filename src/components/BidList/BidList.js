@@ -32,41 +32,38 @@ const bidFormFields = [{
 	width: FieldType.Date,
 }];
 
+const BidPropType = PropTypes.shape({
+	id: PropTypes.string,
+	carTitle: PropTypes.string,
+	amount: PropTypes.number,
+	created: PropTypes.string,
+});
+
 export class BidList extends React.Component {
 	static propTypes = {
-		bids: PropTypes.arrayOf(PropTypes.shape({
-			id: PropTypes.string,
-			carTitle: PropTypes.string,
-			amount: PropTypes.number,
-			created: PropTypes.string,
-		})),
+		bids: PropTypes.arrayOf(BidPropType),
+		bidSelected: BidPropType,
 		pageIndex: PropTypes.number,
 		readonly: PropTypes.bool,
 		onPageRequest: PropTypes.func,
+		onSelect: PropTypes.func,
+		onUnselect: PropTypes.func,
 		onAdd: PropTypes.func,
 	};
 
 	static defaultProps = {
 		bids: [],
+		bidSelected: null,
 		pageIndex: 0,
 		readonly: false,
 		onPageRequest() {},
+		onSelect() {},
+		onUnselect() {},
 		onAdd() {},
 	};
 
-	state = {
-		bidSelected: null,
-	};
-
-	openBidModal = id => this.setState({
-		bidSelected: this.props.bids.find(({ id: bId }) => bId === id),
-	});
-
-	closeBidModal = () => this.setState({ bidSelected: null });
-
 	render() {
-		const { bids, pageIndex, onPageRequest, readonly, onAdd } = this.props;
-		const { bidSelected } = this.state;
+		const { bids, pageIndex, bidSelected, onPageRequest, readonly, onSelect, onUnselect, onAdd } = this.props;
 
 		return (
 			<div className="bid-list">
@@ -80,11 +77,17 @@ export class BidList extends React.Component {
 					pageIndex={pageIndex}
 					onPageRequest={onPageRequest}
 					onAddClick={onAdd}
-					onRowClick={this.openBidModal}
+					onRowClick={onSelect}
 					readonly={readonly}
 				/>
 				{!!bidSelected && (
-					<ModalForm title="Bid" fields={bidFormFields} data={bidSelected} onCancel={this.closeBidModal} />
+					<ModalForm
+						title="Bid"
+						fields={bidFormFields}
+						data={bidSelected}
+						backNav={false}
+						onCancel={onUnselect}
+					/>
 				)}
 			</div>
 		);

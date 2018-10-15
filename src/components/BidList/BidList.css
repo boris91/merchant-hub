@@ -7,9 +7,10 @@
 }
 
 .bid-list .modal-dialog__frame-content .data-form__fields {
-	margin: 20px 50px;
+	margin: 20px 30px;
 }
 
 .bid-list .modal-dialog__frame-content .data-form__actions {
-	margin: 20px 50px;
+	margin: 0 30px 20px 30px;
+	justify-content: flex-end;
 }

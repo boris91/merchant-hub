@@ -53,6 +53,7 @@ export class DataForm extends React.Component {
 		editable: PropTypes.bool,
 		removable: PropTypes.bool,
 		actionsOnTop: PropTypes.bool,
+		backNav: PropTypes.bool,
 		onEdit: PropTypes.func,
 		onRemove: PropTypes.func,
 		onSave: PropTypes.func,
@@ -69,6 +70,7 @@ export class DataForm extends React.Component {
 		editable: true,
 		removable: true,
 		actionsOnTop: false,
+		backNav: true,
 		onEdit() {},
 		onRemove() {},
 		onSave() {},
@@ -103,11 +105,11 @@ export class DataForm extends React.Component {
 	}
 
 	renderActions() {
-		const { editable, removable, mode, onRemove, onSave, onEdit, onCancel, onCreate } = this.props;
+		const { editable, removable, mode, backNav, onRemove, onSave, onEdit, onCancel, onCreate } = this.props;
 
 		return (
 			<div className="data-form__actions">
-				{editable && mode === Mode.Read && (
+				{backNav && editable && mode === Mode.Read && (
 					<button className="data-form__actions-button data-form__actions-button_back" onClick={onCancel}>Back</button>
 				)}
 				{editable && mode === Mode.Read && (

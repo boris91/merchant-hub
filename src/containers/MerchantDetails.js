@@ -4,6 +4,13 @@ import { DataForm, BidList } from '../components';
 
 const { Mode, FieldType } = DataForm;
 
+const BidPropType = PropTypes.shape({
+	id: PropTypes.string,
+	carTitle: PropTypes.string,
+	amount: PropTypes.number,
+	created: PropTypes.string,
+});
+
 export default class MerchantDetails extends React.Component {
 	static propTypes = {
 		getMerchant: PropTypes.func.isRequired,
@@ -19,12 +26,7 @@ export default class MerchantDetails extends React.Component {
 			email: PropTypes.string,
 			phone: PropTypes.string,
 			hasPremium: PropTypes.bool,
-			bids: PropTypes.arrayOf(PropTypes.shape({
-				id: PropTypes.string,
-				carTitle: PropTypes.string,
-				amount: PropTypes.number,
-				created: PropTypes.string,
-			})),
+			bids: PropTypes.arrayOf(BidPropType),
 		}),
 		history: PropTypes.shape({
 			goBack: PropTypes.func,
@@ -47,6 +49,7 @@ export default class MerchantDetails extends React.Component {
 		mode: Mode.Read,
 		merchant: Object.assign({}, this.props.merchantSelected),
 		bidsPageIndex: 0,
+		bid: null,
 	};
 
 	componentDidMount() {
@@ -144,10 +147,15 @@ export default class MerchantDetails extends React.Component {
 
 	onBidsPageRequest = bidsPageIndex => this.setState({ bidsPageIndex });
 
-	onBidSelect = id => console.log(id);
+	onBidSelect = id => {
+		const bid = this.state.merchant.bids.find(({ id: bId }) => bId === id);
+		this.setState({ bid });
+	};
+
+	onBidUnselect = () => this.setState({ bid: null });
 
 	render() {
-		const { mode, merchant, bidsPageIndex } = this.state;
+		const { mode, merchant, bidsPageIndex, bid } = this.state;
 
 		return (
 			<div className="merchant-details">
@@ -168,10 +176,12 @@ export default class MerchantDetails extends React.Component {
 				>
 					<BidList
 						bids={merchant.bids}
+						bidSelected={bid}
 						pageIndex={bidsPageIndex}
 						onPageRequest={this.onBidsPageRequest}
 						readonly={mode === Mode.Read}
 						onSelect={this.onBidSelect}
+						onUnselect={this.onBidUnselect}
 					/>
 				</DataForm>
 			</div>

@@ -4,4 +4,5 @@ export default {
 	merchantsPageIndex: 0,
 	merchantsCountPerPage: 5,
 	merchantSelected: null,
+	bidSelected: null,
 };
