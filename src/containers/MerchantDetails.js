@@ -84,10 +84,11 @@ export default class MerchantDetails extends React.Component {
 
 	get fields() {
 		return [{
-			name: 'avatarUrl',
-			label: 'Avatar',
-			type: FieldType.Image,
-		}, {
+		// 	name: 'avatarUrl',
+		// 	label: 'Avatar',
+		// 	type: FieldType.Image,
+		// 	required: true,
+		// }, {
 			name: 'firstname',
 			label: 'First name',
 		}, {
@@ -96,6 +97,7 @@ export default class MerchantDetails extends React.Component {
 		}, {
 			name: 'email',
 			label: 'Email',
+			type: FieldType.Email,
 		}, {
 			name: 'phone',
 			label: 'Phone',

@@ -14,6 +14,7 @@ const FieldType = {
 	Bool: 'checkbox',
 	Image: 'file',
 	Date: 'date',
+	Email: 'email',
 };
 
 const FieldValueKey = {
@@ -22,6 +23,7 @@ const FieldValueKey = {
 	[FieldType.Bool]: 'checked',
 	[FieldType.Image]: 'defaultValue',
 	[FieldType.Date]: 'value',
+	[FieldType.Email]: 'value',
 };
 
 const FieldDefaultValue = {
@@ -30,6 +32,7 @@ const FieldDefaultValue = {
 	[FieldType.Bool]: false,
 	[FieldType.Image]: '',
 	[FieldType.Date]: '',
+	[FieldType.Email]: '',
 };
 
 export class DataForm extends React.Component {
@@ -42,6 +45,7 @@ export class DataForm extends React.Component {
 			type: PropTypes.oneOf(Object.values(FieldType)),
 			name: PropTypes.string,
 			label: PropTypes.string,
+			required: PropTypes.bool,
 		})).isRequired,
 		data: PropTypes.shape(),
 		children: PropTypes.oneOfType([
@@ -88,12 +92,13 @@ export class DataForm extends React.Component {
 		onChange(fieldName, value);
 	};
 
-	renderField = ({ type = FieldType.Text, name, label }, index) => {
+	renderField = ({ type = FieldType.Text, name, label, required = false }, index) => {
 		const { mode, data: { [name]: value } } = this.props;
 		const disabled = mode === Mode.Read;
 		const fieldValueProps = {
 			type,
 			disabled,
+			required,
 			'data-field-name': name,
 			'data-field-value-key': FieldValueKey[type],
 			[FieldValueKey[type]]: typeof value === 'undefined' ? FieldDefaultValue[type] : value,
