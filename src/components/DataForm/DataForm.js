@@ -1,39 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Mode, FieldType, FieldValueKey, FieldDefaultValue } from './DataForm.utils';
 import './DataForm.css';
-
-const Mode = {
-	Read: 'read',
-	Edit: 'edit',
-	Create: 'create',
-};
-
-const FieldType = {
-	Text: 'text',
-	Number: 'number',
-	Bool: 'checkbox',
-	Image: 'file',
-	Date: 'date',
-	Email: 'email',
-};
-
-const FieldValueKey = {
-	[FieldType.Text]: 'value',
-	[FieldType.Number]: 'value',
-	[FieldType.Bool]: 'checked',
-	[FieldType.Image]: 'defaultValue',
-	[FieldType.Date]: 'value',
-	[FieldType.Email]: 'value',
-};
-
-const FieldDefaultValue = {
-	[FieldType.Text]: '',
-	[FieldType.Number]: 0,
-	[FieldType.Bool]: false,
-	[FieldType.Image]: '',
-	[FieldType.Date]: '',
-	[FieldType.Email]: '',
-};
 
 export class DataForm extends React.Component {
 	static Mode = Mode;
@@ -113,29 +81,28 @@ export class DataForm extends React.Component {
 		);
 	}
 
+	renderActionButton(label, onClick) {
+		return (
+			<button
+				className={`data-form__actions-button data-form__actions-button_${label.toLowerCase()}`}
+				onClick={onClick}
+			>
+				{label}
+			</button>
+		);
+	}
+
 	renderActions(rightAligned) {
 		const { editable, removable, mode, backNav, onRemove, onSave, onEdit, onCancel, onCreate } = this.props;
 
 		return (
 			<div className={`data-form__actions${rightAligned ? ' data-form__actions_right-aligned' : ''}`}>
-				{backNav && editable && mode === Mode.Read && (
-					<button className="data-form__actions-button data-form__actions-button_back" onClick={onCancel}>Back</button>
-				)}
-				{editable && mode === Mode.Read && (
-					<button className="data-form__actions-button data-form__actions-button_edit" onClick={onEdit}>Edit</button>
-				)}
-				{editable && mode === Mode.Edit && (
-					<button className="data-form__actions-button data-form__actions-button_save" onClick={onSave}>Save</button>
-				)}
-				{editable && mode === Mode.Create && (
-					<button className="data-form__actions-button data-form__actions-button_create" onClick={onCreate}>Create</button>
-				)}
-				{editable && mode !== Mode.Read && (
-					<button className="data-form__actions-button data-form__actions-button_cancel" onClick={onCancel}>Cancel</button>
-				)}
-				{removable && mode === Mode.Read && (
-					<button className="data-form__actions-button data-form__actions-button_remove" onClick={onRemove}>Remove</button>
-				)}
+				{backNav && editable && mode === Mode.Read && this.renderActionButton('Back', onCancel)}
+				{editable && mode === Mode.Read && this.renderActionButton('Edit', onEdit)}
+				{editable && mode === Mode.Edit && this.renderActionButton('Save', onSave)}
+				{editable && mode === Mode.Create && this.renderActionButton('Create', onCreate)}
+				{editable && mode !== Mode.Read && this.renderActionButton('Cancel', onCancel)}
+				{removable && mode === Mode.Read && this.renderActionButton('Remove', onRemove)}
 			</div>
 		);
 	}
