@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataForm, BidList } from '../components';
+import { DataForm, BidList, ModalDialog } from '../components';
 
 const { Mode, FieldType } = DataForm;
 
@@ -51,6 +51,7 @@ export default class MerchantDetails extends React.Component {
 	state = {
 		mode: Mode.Read,
 		merchant: Object.assign({}, this.props.merchantSelected),
+		merchantRemoveRequested: false,
 		bidsPageIndex: 0,
 		bid: null,
 		bidMode: Mode.Read,
@@ -121,10 +122,18 @@ export default class MerchantDetails extends React.Component {
 		});
 	};
 
-	remove = () => {
-		const { removeMerchant, merchantSelected: { id }, history } = this.props;
-		removeMerchant(id);
-		history.goBack();
+	onMerchantRemove = () => {
+		this.setState({ merchantRemoveRequested: true });
+	};
+
+	onMerchantRemoveConfirm = isConfirmed => {
+		this.setState({ merchantRemoveRequested: false }, () => {
+			if (isConfirmed) {
+				const {removeMerchant, merchantSelected: {id}, history} = this.props;
+				removeMerchant(id);
+				history.goBack();
+			}
+		});
 	};
 
 	save = () => {
@@ -195,7 +204,7 @@ export default class MerchantDetails extends React.Component {
 	};
 
 	render() {
-		const { mode, merchant, bidsPageIndex, bid, bidMode } = this.state;
+		const { mode, merchant, merchantRemoveRequested, bidsPageIndex, bid, bidMode } = this.state;
 
 		return (
 			<div className="merchant-details">
@@ -209,7 +218,7 @@ export default class MerchantDetails extends React.Component {
 					actionsOnTop={mode !== Mode.Create}
 					onSave={this.save}
 					onCreate={this.create}
-					onRemove={this.remove}
+					onRemove={this.onMerchantRemove}
 					onCancel={this.cancel}
 					onEdit={this.edit}
 					onChange={this.change}
@@ -232,6 +241,16 @@ export default class MerchantDetails extends React.Component {
 						/>
 					)}
 				</DataForm>
+				{merchantRemoveRequested && (
+					<ModalDialog
+						title="Remove merchant"
+						confirmable
+						closable={false}
+						onConfirm={this.onMerchantRemoveConfirm}
+					>
+						Are you sure you want to remove "{merchant.firstname} {merchant.lastname}"?
+					</ModalDialog>
+				)}
 			</div>
 		);
 	}
