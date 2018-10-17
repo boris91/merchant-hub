@@ -37,11 +37,8 @@
 }
 
 .modal-dialog__frame-header-close {
-	width: 30px;
+	min-width: 30px;
 	height: 30px;
-	border-radius: 50%;
-	opacity: 0.8;
-	border: 1px solid #833f29;
 }
 
 .modal-dialog__frame-header-close::after {
@@ -49,12 +46,6 @@
 	position: absolute;
 	transform: translate(-6px, -15.5px) rotate(45deg);
 	font-size: 26px;
-	color: #833f29;
-}
-
-.modal-dialog__frame-header-close:hover {
-	opacity: 1;
-	cursor: pointer;
 }
 
 .modal-dialog__frame-content {
@@ -71,26 +62,5 @@
 }
 
 .modal-dialog__frame-confirm-button {
-	width: 80px;
-	height: 30px;
-	opacity: 0.8;
 	margin: 0 5px;
-	font-size: 14px;
-	border-radius: 5px;
-	border: 1px solid;
-}
-
-.modal-dialog__frame-confirm-button:hover {
-	opacity: 1;
-	cursor: pointer;
-}
-
-.modal-dialog__frame-confirm-button_yes {
-	border-color: #831d27;
-	color: #831d27;
-}
-
-.modal-dialog__frame-confirm-button_no {
-	border-color: #28835e;
-	color: #28835e;
 }

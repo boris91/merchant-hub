@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '../../components';
 import './DataTable.css';
 
 const renderCellContent = value => {
@@ -68,27 +69,31 @@ export const DataTable = ({
 		)}
 		{(pagesCount > 1) && (
 			<div className="data-table__nav">
-				<button
+				<Button
 					className="data-table__nav-button"
+					label="< prev"
 					onClick={pageIndex > 0 ? () => onPageRequest(pageIndex - 1) : () => {}}
 					disabled={pageIndex <= 0}
-				>
-					&lt; prev
-				</button>
+				/>
 				<span className="data-table__nav-counter">
 					{`${pageIndex + 1} / ${pagesCount}`}
 				</span>
-				<button
+				<Button
 					className="data-table__nav-button"
+					label="next >"
 					onClick={pageIndex < pagesCount - 1 ? () => onPageRequest(pageIndex + 1) : () => {}}
 					disabled={pageIndex >= pagesCount - 1}
-				>
-					next &gt;
-				</button>
+				/>
 			</div>
 		)}
 		{!readonly && (
-			<button className="data-table__add-button" onClick={onAddClick}>Add new {itemName}</button>
+			<Button
+				className="data-table__add-button"
+				kind="success"
+				thick
+				label={`Add new ${itemName}`}
+				onClick={onAddClick}
+			/>
 		)}
 	</div>
 );

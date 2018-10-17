@@ -1,0 +1,58 @@
+.button {
+	min-width: 80px;
+	min-height: 30px;
+	opacity: 0.8;
+	font-size: 14px;
+	border: 1px solid;
+}
+
+.button:disabled {
+	opacity: 0.4;
+}
+
+.button:hover:not(:disabled) {
+	opacity: 1;
+	cursor: pointer;
+}
+
+.button_thick {
+	border-width: 2px;
+	font-weight: bold;
+}
+
+.button_default {
+	border-color: darkgray;
+	color: dimgray;
+}
+
+.button_success {
+	border-color: #28835e;
+	color: #28835e;
+}
+
+.button_info {
+	border-color: #3e5f83;
+	color: #3e5f83;
+}
+
+.button_warn {
+	border-color: #833f29;
+	color: #833f29;
+}
+
+.button_danger {
+	border-color: #831d27;
+	color: #831d27;
+}
+
+.button_smooth-rectangle {
+	border-radius: 5px;
+}
+
+.button_circle {
+	border-radius: 50%;
+}
+
+.button_rectangle {
+	border-radius: 0;
+}

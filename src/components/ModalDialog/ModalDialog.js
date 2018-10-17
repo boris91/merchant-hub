@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '../../components';
 import './ModalDialog.css';
 
 const stopEventPropagation = event => {
@@ -7,7 +8,7 @@ const stopEventPropagation = event => {
 	event.nativeEvent.stopImmediatePropagation();
 };
 
-export const ModalDialog = ({ title, closable, children, confirmable, onClose, onConfirm }) => (
+export const ModalDialog = ({ title, closable, children, confirmable, dangerous, onClose, onConfirm }) => (
 	<div className="modal-dialog" onClick={closable && !confirmable ? onClose : () => {}}>
 		<div className="modal-dialog__frame" onClick={stopEventPropagation}>
 			{(!!title || (closable && !confirmable)) && (
@@ -16,7 +17,12 @@ export const ModalDialog = ({ title, closable, children, confirmable, onClose, o
 						<div className="modal-dialog__frame-header-title">{title}</div>
 					)}
 					{closable && !confirmable && (
-						<button className="modal-dialog__frame-header-close" onClick={onClose} />
+						<Button
+							className="modal-dialog__frame-header-close"
+							shape="circle"
+							kind="warn"
+							onClick={onClose}
+						/>
 					)}
 				</div>
 			)}
@@ -27,18 +33,18 @@ export const ModalDialog = ({ title, closable, children, confirmable, onClose, o
 			)}
 			{confirmable && (
 				<div className="modal-dialog__frame-confirm">
-					<button
+					<Button
+						kind={dangerous ? 'danger' : 'success'}
+						label="Yes"
 						className="modal-dialog__frame-confirm-button modal-dialog__frame-confirm-button_yes"
 						onClick={() => onConfirm(true)}
-					>
-						Yes
-					</button>
-					<button
+					/>
+					<Button
+						kind={dangerous ? 'success' : 'danger'}
+						label="No"
 						className="modal-dialog__frame-confirm-button modal-dialog__frame-confirm-button_no"
 						onClick={() => onConfirm(false)}
-					>
-						No
-					</button>
+					/>
 				</div>
 			)}
 		</div>
@@ -49,6 +55,7 @@ ModalDialog.propTypes = {
 	title: PropTypes.string,
 	closable: PropTypes.bool,
 	confirmable: PropTypes.bool,
+	dangerous: PropTypes.bool,
 	children: PropTypes.oneOfType([
 		PropTypes.node,
 		PropTypes.arrayOf(PropTypes.node),
@@ -61,6 +68,7 @@ ModalDialog.defaultProps = {
 	title: '',
 	closable: true,
 	confirmable: false,
+	dangerous: false,
 	children: null,
 	onClose() {},
 	onConfirm() {},

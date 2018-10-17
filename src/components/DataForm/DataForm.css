@@ -71,45 +71,5 @@
 }
 
 .data-form__actions-button {
-	width: 80px;
-	height: 30px;
-	opacity: 0.8;
 	margin: 0 5px;
-	font-size: 14px;
-	border-radius: 5px;
-	border: 1px solid darkgray;
-	color: dimgray;
-}
-
-.data-form__actions-button:hover {
-	opacity: 1;
-	cursor: pointer;
-}
-
-.data-form__actions-button_back {
-}
-
-.data-form__actions-button_edit {
-	border-color: #3e5f83;
-	color: #3e5f83;
-}
-
-.data-form__actions-button_save {
-	border-color: #28835e;
-	color: #28835e;
-}
-
-.data-form__actions-button_create {
-	border-color: #28835e;
-	color: #28835e;
-}
-
-.data-form__actions-button_cancel {
-	border-color: #833f29;
-	color: #833f29;
-}
-
-.data-form__actions-button_remove {
-	border-color: #831d27;
-	color: #831d27;
 }

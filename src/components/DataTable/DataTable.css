@@ -73,23 +73,7 @@
 }
 
 .data-table__nav-button {
-	width: 80px;
-	height: 30px;
-	opacity: 0.8;
 	margin: 0 5px;
-	font-size: 14px;
-	border-radius: 5px;
-	border: 1px solid darkgray;
-	color: dimgray;
-}
-
-.data-table__nav-button:disabled {
-	opacity: 0.4;
-}
-
-.data-table__nav-button:hover:not(:disabled) {
-	opacity: 1;
-	cursor: pointer;
 }
 
 .data-table__nav-counter {
@@ -98,19 +82,7 @@
 
 .data-table__add-button {
 	align-self: center;
-	height: 30px;
-	opacity: 0.8;
-	font-size: 14px;
-	font-weight: bold;
-	border-radius: 5px;
-	border: 2px solid #28835e;
-	color: #28835e;
 	margin: 10px 0;
-}
-
-.data-table__add-button:hover {
-	opacity: 1;
-	cursor: pointer;
 }
 
 .data-table__placeholder {

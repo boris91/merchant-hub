@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '../../components';
 import { Mode, FieldType, FieldValueKey, FieldDefaultValue } from './DataForm.utils';
 import './DataForm.css';
 
@@ -81,14 +82,16 @@ export class DataForm extends React.Component {
 		);
 	}
 
-	renderActionButton(label, onClick) {
+	renderActionButton(label, onClick, kind) {
 		return (
-			<button
-				className={`data-form__actions-button data-form__actions-button_${label.toLowerCase()}`}
+			<Button
+				kind={kind}
+				label={label}
+				className="data-form__actions-button"
 				onClick={onClick}
 			>
 				{label}
-			</button>
+			</Button>
 		);
 	}
 
@@ -98,11 +101,11 @@ export class DataForm extends React.Component {
 		return (
 			<div className={`data-form__actions${rightAligned ? ' data-form__actions_right-aligned' : ''}`}>
 				{backNav && editable && mode === Mode.Read && this.renderActionButton('Back', onCancel)}
-				{editable && mode === Mode.Read && this.renderActionButton('Edit', onEdit)}
-				{editable && mode === Mode.Edit && this.renderActionButton('Save', onSave)}
-				{editable && mode === Mode.Create && this.renderActionButton('Create', onCreate)}
-				{editable && mode !== Mode.Read && this.renderActionButton('Cancel', onCancel)}
-				{removable && mode === Mode.Read && this.renderActionButton('Remove', onRemove)}
+				{editable && mode === Mode.Read && this.renderActionButton('Edit', onEdit, 'info')}
+				{editable && mode === Mode.Edit && this.renderActionButton('Save', onSave, 'success')}
+				{editable && mode === Mode.Create && this.renderActionButton('Create', onCreate, 'success')}
+				{editable && mode !== Mode.Read && this.renderActionButton('Cancel', onCancel, 'warn')}
+				{removable && mode === Mode.Read && this.renderActionButton('Remove', onRemove, 'danger')}
 			</div>
 		);
 	}

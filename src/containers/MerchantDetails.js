@@ -245,6 +245,7 @@ export default class MerchantDetails extends React.Component {
 					<ModalDialog
 						title="Remove merchant"
 						confirmable
+						dangerous
 						closable={false}
 						onConfirm={this.onMerchantRemoveConfirm}
 					>
